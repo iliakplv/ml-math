@@ -12,15 +12,11 @@ This is an implementation of fundamental mathematics of ML (specifically, Neural
 
 `metrics.py` - evaluation metrics such as [cross entropy](https://en.wikipedia.org/wiki/Cross_entropy)
 
+`propagation.py` - [backpropagation](https://en.wikipedia.org/wiki/Backpropagation) 
+
 ### TODO
 
-- Differentiation
-
-- Gradient Descent algorithm
-
-- Backpropagation algorithm
-
-- Random initialisation (symmetry breaking)
+- Initialisation
 
 - Training and evaluation
 
