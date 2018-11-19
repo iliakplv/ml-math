@@ -6,7 +6,7 @@ This is an implementation of fundamental mathematics of ML (specifically, Neural
 
 ### Contents
 
-`activation.py` - activation functions ([ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)), [hyperbolic tangent](https://en.wikipedia.org/wiki/Hyperbolic_function)) and their derivatives
+`activation.py` - activation function ([hyperbolic tangent](https://en.wikipedia.org/wiki/Hyperbolic_function))
 
 `algebra.py` - vector and matrix operations
 
