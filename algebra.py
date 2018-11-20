@@ -23,6 +23,9 @@ class Vector:
             raise Exception('Different size vectors')
         return Vector([self.vector[i] + other.vector[i] for i in range(len(self))])
 
+    def __mul__(self, other):
+        return list_sum(list_mul(self.vector, other.vector))
+
     def print(self):
         for item in self.vector:
             print('[ {} ]'.format(item))
@@ -67,9 +70,8 @@ if __name__ == '__main__':
     v = Vector([1, 2, 3])
     print(len(v))
     v.print()
-    v += v
-    print(len(v))
-    v.print()
+    print(v * v)
+    (v + v).print()
 
     m = Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
     print(m.dimensions())
