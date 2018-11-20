@@ -46,6 +46,13 @@ class Matrix:
     def dimensions(self):
         return self.rows, self.cols
 
+    def transpose(self):
+        matrix_t = []
+        for col_index in range(self.cols):
+            row_t = [self.matrix[row_index][col_index] for row_index in range(self.rows)]
+            matrix_t.append(row_t)
+        return Matrix(matrix_t)
+
     def __mul__(self, vector):
         if self.cols != len(vector):
             raise Exception('Incompatible matrix/vector dimensions')
@@ -67,8 +74,8 @@ if __name__ == '__main__':
     m = Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
     print(m.dimensions())
     m.print()
+    m.transpose().print()
 
-    print()
     m = Matrix([[1, 1], [1, 2]])
     v = Vector([3, 4])
     (m * v).print()
