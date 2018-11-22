@@ -78,6 +78,16 @@ class Vector:
         m2 = Matrix([other.vector])
         return m1 * m2
 
+    def __truediv__(self, value):
+        """
+        Divide by scalar value
+        :param value: scalar
+        :return: Vector
+        """
+        if value == 0:
+            raise Exception('Division by zero')
+        return Vector([item / value for item in self.vector])
+
     def print(self):
         for item in self.vector:
             print('[ {} ]'.format(item))
@@ -139,6 +149,7 @@ class Matrix:
 if __name__ == '__main__':
     v = Vector([1, 2, 3])
     v.print()
+    (v / 10).print()
     print(len(v))
     (v + v).print()
     (v - v).print()
