@@ -6,11 +6,14 @@ def tanh(z):
     return algebra.Vector([math.tanh(item) for item in z.vector])
 
 
-def tanh_back(dA, z):
+def tanh_derivative(z):
     ones = algebra.Vector([1.0 for _ in range(len(z))])
     t = tanh(z)
-    dt = ones - t.mul_element_wise(t)  # dt/dx = 1 - tanh(x)^2
-    return dA.mul_element_wise(dt)
+    return ones - t.mul_element_wise(t)
+
+
+def tanh_back(dA, z):
+    return dA.mul_element_wise(tanh_derivative(z))
 
 
 if __name__ == '__main__':
