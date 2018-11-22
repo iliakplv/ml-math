@@ -141,6 +141,16 @@ class Matrix:
             raise Exception('Incompatible matrix dimensions')
         return Matrix(mat_mul(self.matrix, other.matrix))
 
+    def __truediv__(self, value):
+        """
+        Divide by scalar value
+        :param value: scalar
+        :return: Matrix
+        """
+        if value == 0:
+            raise Exception('Division by zero')
+        return Matrix([[item / value for item in row] for row in self.matrix])
+
     def print(self):
         for row in self.matrix:
             print(row)
@@ -156,6 +166,7 @@ if __name__ == '__main__':
     print(v * v)
     v.mul_element_wise(v).print()
     v.mul_outer(v).print()
+    (v.mul_outer(v) / 10).print()
 
     m = Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
     print(m.dimensions())
