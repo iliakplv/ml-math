@@ -47,16 +47,31 @@ class Vector:
         return Vector([self.vector[i] - other.vector[i] for i in range(len(self))])
 
     def __mul__(self, other):
+        """
+        Dot product a.k.a. inner product
+        :param other: Vector
+        :return: scalar value
+        """
         if len(self) != len(other):
             raise Exception('Different size vectors')
         return list_sum(list_mul(self.vector, other.vector))
 
     def mul_element_wise(self, other):
+        """
+        Element-wise product
+        :param other: Vector
+        :return: Vector
+        """
         if len(self) != len(other):
             raise Exception('Different size vectors')
         return Vector(list_mul(self.vector, other.vector))
 
     def mul_outer(self, other):
+        """
+        Outer product
+        :param other: Vector
+        :return: Matrix
+        """
         if len(self) != len(other):
             raise Exception('Different size vectors')
         m1 = Matrix([[item] for item in self.vector])
@@ -94,6 +109,11 @@ class Matrix:
         return Matrix(matrix_t)
 
     def __mul__(self, other):
+        """
+        Multiply by vector or matrix
+        :param other: Vector or Matrix
+        :return: Vector or Matrix
+        """
         if isinstance(other, Vector):
             return self.mul_vector(other)
         elif isinstance(other, Matrix):

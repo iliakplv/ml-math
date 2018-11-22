@@ -9,7 +9,7 @@ def tanh(z):
 def tanh_back(dA, z):
     ones = algebra.Vector([1.0 for _ in range(len(z))])
     t = tanh(z)
-    dt = ones - t.mul_element_wise(t)
+    dt = ones - t.mul_element_wise(t)  # dt/dx = 1 - tanh(x)^2
     return dA.mul_element_wise(dt)
 
 
