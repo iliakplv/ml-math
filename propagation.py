@@ -8,13 +8,10 @@ def layer_forward_prop(layer_input, weight_matrix, bias_vector, act_fun):
 
 
 def layer_back_prop(dA_curr, W_curr, Z_curr, A_prev, act_back, batch_size):
-    # todo batch_size
-    # todo test
-
     dZ_curr = act_back(dA_curr, Z_curr)
 
-    dW_curr = dZ_curr.mul_outer(A_prev)  # divide by batch_size
-    db_curr = dZ_curr  # divide by batch_size
+    dW_curr = dZ_curr.mul_outer(A_prev) / batch_size
+    db_curr = dZ_curr / batch_size
     dA_prev = W_curr.transpose() * dZ_curr
 
     return dW_curr, db_curr, dA_prev
@@ -29,3 +26,5 @@ if __name__ == '__main__':
     z, a = layer_forward_prop(input, weights, bias, act_fun)
     z.print()
     a.print()
+
+    # todo test layer_back_prop
