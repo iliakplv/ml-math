@@ -41,6 +41,11 @@ class Vector:
             raise Exception('Different size vectors')
         return Vector([self.vector[i] + other.vector[i] for i in range(len(self))])
 
+    def __sub__(self, other):
+        if len(self) != len(other):
+            raise Exception('Different size vectors')
+        return Vector([self.vector[i] - other.vector[i] for i in range(len(self))])
+
     def __mul__(self, other):
         if len(self) != len(other):
             raise Exception('Different size vectors')
@@ -116,6 +121,7 @@ if __name__ == '__main__':
     v.print()
     print(len(v))
     (v + v).print()
+    (v - v).print()
     print(v * v)
     v.mul_element_wise(v).print()
     v.mul_outer(v).print()
