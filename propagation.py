@@ -2,19 +2,30 @@ import algebra
 import activation
 
 
-def layer_forward_prop(layer_input, weight_matrix, bias_vector, activation_function):
+def layer_forward_prop(layer_input, weight_matrix, bias_vector, act_fun):
     z = weight_matrix * layer_input + bias_vector
-    return z, activation_function(z)
+    return z, act_fun(z)
 
 
-# TODO back prob
+def layer_back_prop(dA_curr, W_curr, Z_curr, A_prev, act_back, batch_size):
+    # todo batch_size
+    # todo test
+
+    dZ_curr = act_back(dA_curr, Z_curr)
+
+    dW_curr = dZ_curr.mul_outer(A_prev)  # divide by batch_size
+    db_curr = dZ_curr  # divide by batch_size
+    dA_prev = W_curr.transpose() * dZ_curr
+
+    return dW_curr, db_curr, dA_prev
+
 
 if __name__ == '__main__':
     input = algebra.Vector([0.1, 0.2])
     weights = algebra.Matrix([[1, 2], [2, 1]])
     bias = algebra.Vector([1, 1])
-    activation_function = activation.tanh
+    act_fun = activation.tanh
 
-    z, a = layer_forward_prop(input, weights, bias, activation_function)
+    z, a = layer_forward_prop(input, weights, bias, act_fun)
     z.print()
     a.print()
