@@ -72,8 +72,6 @@ class Vector:
         :param other: Vector
         :return: Matrix
         """
-        if len(self) != len(other):
-            raise Exception('Different size vectors')
         m1 = Matrix([[item] for item in self.vector])
         m2 = Matrix([other.vector])
         return m1 * m2
