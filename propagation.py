@@ -7,6 +7,23 @@ def layer_forward_prop(layer_input, weight_matrix, bias_vector, act_fun):
     return z, act_fun(z)
 
 
+def net_forward_prop(layers, input, parameters, act_fun):
+    layer_outputs = {}
+    A_curr = input
+
+    for l in range(layers):
+        A_prev = A_curr
+
+        W_curr = parameters['W{}'.format(l)]
+        b_curr = parameters['b{}'.format(l)]
+        Z_curr, A_curr = layer_forward_prop(A_prev, W_curr, b_curr, act_fun)
+
+        layer_outputs['Z{}'.format(l)] = Z_curr
+        layer_outputs['A{}'.format(l)] = A_curr
+
+        return layer_outputs
+
+
 def layer_back_prop(dA_curr, W_curr, Z_curr, A_prev, act_back, batch_size):
     dZ_curr = act_back(dA_curr, Z_curr)
 
