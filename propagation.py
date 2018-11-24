@@ -21,7 +21,7 @@ def net_forward_prop(layers, net_input, params, act_fun):
         layer_outputs['A{}'.format(l - 1)] = A_prev
         layer_outputs['Z{}'.format(l)] = Z_curr
 
-        return A_curr, layer_outputs
+    return A_curr, layer_outputs
 
 
 def layer_back_prop(dA_curr, W_curr, Z_curr, A_prev, act_back):
@@ -55,11 +55,11 @@ def net_back_prop(layers, layer_outputs, output_gradient, params, act_back):
     return param_gradients
 
 
-def output_gradient(Y, Y_hat):
+def output_gradient(y_vector, y_hat_vector):
     gradient = []
-    for i in range(len(Y)):
-        y = Y[i]
-        y_hat = Y_hat[i]
+    for i in range(len(y_vector)):
+        y = y_vector[i]
+        y_hat = y_hat_vector[i]
         g = -((y / y_hat) - ((1 - y) / (1 - y_hat)))
         gradient.append(g)
     return algebra.Vector(gradient)
