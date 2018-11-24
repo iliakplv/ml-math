@@ -38,7 +38,7 @@ def train(X, Y, act_fun, act_fun_back, architecture, loss_metric, learning_rate,
     layers = len(architecture)
     params = init_params(architecture)
 
-    examples_processed = 0
+    iterations = 0
 
     for epoch in range(epochs):
         for example_idx in range(len(X)):
@@ -53,10 +53,10 @@ def train(X, Y, act_fun, act_fun_back, architecture, loss_metric, learning_rate,
 
             update_params(layers, params, param_gradients, learning_rate)
 
-            examples_processed += 1
+            iterations += 1
 
             # Metrics
-            if examples_processed % metrics_period == 0:
+            if iterations % metrics_period == 0:
                 m_y_hat_list = []
                 for m_idx in range(len(X)):
                     m_x = algebra.Vector(X[m_idx])
@@ -64,8 +64,8 @@ def train(X, Y, act_fun, act_fun_back, architecture, loss_metric, learning_rate,
                     m_y_hat_list.append(m_y_hat.vector)
                 loss = metrics.loss_function(m_y_hat_list, Y, loss_metric)
                 accuracy = metrics.accuracy(m_y_hat_list, Y)
-                print('Epoch: {}\tExamples: {}k\t\tLoss: {}\t\tAccuracy: {}'.format(
-                    epoch, examples_processed / 1000, loss, accuracy))
+                print('Epoch: {}\tIter: {}k\t\tLoss: {}\t\tAccuracy: {}'.format(
+                    epoch + 1, iterations / 1000, loss, accuracy))
 
     memory['layers'] = layers
     memory['params'] = params
