@@ -85,3 +85,19 @@ def predict(X, Y):
             print('\nExample #{}'.format(example_idx))
             y.print()
             y_hat.print()
+
+
+def print_params():
+    layers = memory['layers']
+    params = memory['params']
+
+    for l in range(1, layers):
+        w_index = 'W{}'.format(l)
+        w = params[w_index]
+        print('\n' + w_index)
+        w.print()
+
+        b_index = 'b{}'.format(l)
+        b = params[b_index]
+        print('\n' + b_index)
+        b.print()
