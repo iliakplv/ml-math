@@ -25,12 +25,10 @@ def net_forward_prop(layers, net_input, params, act_fun):
 
 
 def layer_back_prop(dA_curr, W_curr, Z_curr, A_prev, act_back):
-    m = len(A_prev)
-
     dZ_curr = act_back(dA_curr, Z_curr)
 
-    dW_curr = dZ_curr.mul_outer(A_prev) / m
-    db_curr = dZ_curr / m
+    dW_curr = dZ_curr.mul_outer(A_prev)
+    db_curr = dZ_curr
     dA_prev = W_curr.transpose() * dZ_curr
 
     return dW_curr, db_curr, dA_prev
