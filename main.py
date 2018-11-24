@@ -16,7 +16,7 @@ learning_rate = 0.000001
 training_epochs = 10000
 
 metrics_period = 10000  # calculate metrics every `metrics_period` iterations
-test_examples = 10  # number of test examples for the trained network
+test_examples = 5  # number of test examples for the trained network
 
 if __name__ == '__main__':
     features, labels = data.get_training_data()
@@ -37,5 +37,6 @@ if __name__ == '__main__':
         r = random.randint(0, len(features))
         test_features.append(features[r])
         test_labels.append(labels[r])
-
     train.predict(test_features, test_labels)
+
+    # train.print_params()
