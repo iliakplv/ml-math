@@ -60,7 +60,7 @@ def train(X, Y, act_fun, act_fun_back, architecture, learning_rate, epochs, metr
                     m_x = algebra.Vector(X[m_idx])
                     m_y_hat, _ = propagation.net_forward_prop(layers, m_x, params, act_fun)
                     m_y_hat_list.append(m_y_hat.vector)
-                loss = metrics.cross_entropy_loss(m_y_hat_list, Y)
+                loss = metrics.loss(m_y_hat_list, Y, metrics.mse)
                 accuracy = metrics.accuracy(m_y_hat_list, Y)
                 print('Epoch: {}\tExamples: {}\t\tLoss: {}\t\tAccuracy: {}'.format(
                     epoch, examples_processed, loss, accuracy))
