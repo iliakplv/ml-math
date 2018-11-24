@@ -14,7 +14,7 @@ def cross_entropy(y_hat, y):
 
 def cross_entropy_loss(y_hat_list, y_list):
     if len(y_hat_list) != len(y_list):
-        raise Exception('Different size vectors')
+        raise Exception('Different size lists')
 
     sum = 0
     total = len(y_list)
