@@ -32,33 +32,35 @@ def update_params(layers, params, param_gradients, learning_rate):
         params['b{}'.format(l)] -= param_gradients['db{}'.format(l)] * learning_rate
 
 
-def train(X, Y, act_fun, act_fun_back, architecture, learning_rate, epochs):
+def train(X, Y, act_fun, act_fun_back, architecture, learning_rate, epochs, metrics_period):
     layers = len(architecture)
-
     params = init_params(architecture)
 
+    examples_processed = 0
+
     for epoch in range(epochs):
-        print('\nEpoch: {}'.format(epoch))
         for example_idx in range(len(X)):
             x = algebra.Vector(X[example_idx])
             y = algebra.Vector(Y[example_idx])
 
-            # Forward prop
             y_hat, layer_outputs = propagation.net_forward_prop(layers, x, params, act_fun)
 
-            # Metrics
-            m_y_hat_list = []
-            for m_idx in range(len(X)):
-                m_x = algebra.Vector(X[m_idx])
-                m_y_hat, _ = propagation.net_forward_prop(layers, m_x, params, act_fun)
-                m_y_hat_list.append(m_y_hat.vector)
-            loss = metrics.cross_entropy_loss(m_y_hat_list, Y)
-            accuracy = metrics.accuracy(m_y_hat_list, Y)
-            print('#{}\tloss: {}\taccuracy: {}'.format(example_idx, loss, accuracy))
-
-            # Backprop
             output_gradient = propagation.output_gradient(y, y_hat)
+
             param_gradients = propagation.net_back_prop(layers, layer_outputs, output_gradient, params, act_fun_back)
 
-            # Weight update
             update_params(layers, params, param_gradients, learning_rate)
+
+            examples_processed += 1
+
+            # Metrics
+            if examples_processed % metrics_period == 0:
+                m_y_hat_list = []
+                for m_idx in range(len(X)):
+                    m_x = algebra.Vector(X[m_idx])
+                    m_y_hat, _ = propagation.net_forward_prop(layers, m_x, params, act_fun)
+                    m_y_hat_list.append(m_y_hat.vector)
+                loss = metrics.cross_entropy_loss(m_y_hat_list, Y)
+                accuracy = metrics.accuracy(m_y_hat_list, Y)
+                print('Epoch: {}\tExamples: {}\t\tLoss: {}\t\tAccuracy: {}'.format(
+                    epoch, examples_processed, loss, accuracy))

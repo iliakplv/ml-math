@@ -37,7 +37,14 @@ def normalise_features(features):
             features[row][col] = norm
 
 
-def get_data():
+def get_training_data():
+    """
+    Read Iris dataset from 'data.csv'
+    Encode labels (one-hot vectors)
+    Shuffle dataset
+    Normalise feature values
+    :return: features, labels
+    """
     features = []
     labels = []
 
@@ -52,12 +59,12 @@ def get_data():
             features.append(feature_vector)
             labels.append(encode_label(vector[4]))
 
-        normalise_features(features)
+    normalise_features(features)
 
     return features, labels
 
 
 if __name__ == '__main__':
-    f, l = get_data()
-    print(f)
-    print(l)
+    features, labels = get_training_data()
+    print(features)
+    print(labels)
