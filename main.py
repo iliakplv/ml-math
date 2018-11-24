@@ -1,25 +1,26 @@
+import random
+
 import activation
 import data
 import metrics
 import train
 
-# Neural Network
+# input layer size must match the number of features
+# output layer size must match the number of classes
+network_architecture = [4, 5, 3]
 activation_function = activation.tanh
 activation_function_back = activation.tanh_back
-network_architecture = [4, 5, 3]
 
-# Hyperparameters
-learning_rate = 0.000001
-epochs = 1000000
-
-# Loss
 loss_metric = metrics.mse
+learning_rate = 0.000001
+training_epochs = 10000
 
-# Calculate metrics every `metrics_period` training iterations
-metrics_period = 10000
+metrics_period = 10000  # calculate metrics every `metrics_period` iterations
+test_examples = 10  # number of test examples for the trained network
 
 if __name__ == '__main__':
     features, labels = data.get_training_data()
+
     train.train(features,
                 labels,
                 activation_function,
@@ -27,5 +28,14 @@ if __name__ == '__main__':
                 network_architecture,
                 loss_metric,
                 learning_rate,
-                epochs,
+                training_epochs,
                 metrics_period)
+
+    test_features = []
+    test_labels = []
+    for i in range(test_examples):
+        r = random.randint(0, len(features))
+        test_features.append(features[r])
+        test_labels.append(labels[r])
+
+    train.predict(test_features, test_labels)

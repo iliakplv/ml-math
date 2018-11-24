@@ -4,6 +4,8 @@ import algebra
 import metrics
 import propagation
 
+memory = {}
+
 
 def random_param():
     return random.uniform(0, 1.0)
@@ -64,3 +66,22 @@ def train(X, Y, act_fun, act_fun_back, architecture, loss_metric, learning_rate,
                 accuracy = metrics.accuracy(m_y_hat_list, Y)
                 print('Epoch: {}\tExamples: {}k\t\tLoss: {}\t\tAccuracy: {}'.format(
                     epoch, examples_processed / 1000, loss, accuracy))
+
+    memory['layers'] = layers
+    memory['params'] = params
+    memory['act_fun'] = act_fun
+
+
+def predict(X, Y):
+    if memory:
+        layers = memory['layers']
+        params = memory['params']
+        act_fun = memory['act_fun']
+
+        for example_idx in range(len(X)):
+            x = algebra.Vector(X[example_idx])
+            y = algebra.Vector(Y[example_idx])
+            y_hat, _ = propagation.net_forward_prop(layers, x, params, act_fun)
+            print('\nExample #{}'.format(example_idx))
+            y.print()
+            y_hat.print()
