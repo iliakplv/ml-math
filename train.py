@@ -1,8 +1,8 @@
-import activation
+import random
+
 import algebra
 import metrics
 import propagation
-import random
 
 
 def random_param():
@@ -32,17 +32,13 @@ def update_params(layers, params, param_gradients, learning_rate):
         params['b{}'.format(l)] -= param_gradients['db{}'.format(l)] * learning_rate
 
 
-def train(X, Y):
-    act_fun = activation.tanh
-    act_fun_back = activation.tanh_back
-    architecture = [2, 3, 2]
+def train(X, Y, act_fun, act_fun_back, architecture, learning_rate, epochs):
     layers = len(architecture)
-    learning_rate = 0.01
-    epochs = 1
 
     params = init_params(architecture)
 
     for epoch in range(epochs):
+        print('\nEpoch: {}'.format(epoch))
         for example_idx in range(len(X)):
             x = algebra.Vector(X[example_idx])
             y = algebra.Vector(Y[example_idx])
@@ -58,7 +54,7 @@ def train(X, Y):
                 y_hat_test, _ = propagation.net_forward_prop(layers, x_test, params, act_fun)
                 y_hat_tests.append(y_hat_test.vector)
             accuracy = metrics.accuracy(y_hat_tests, Y)
-            print('L: {}\t\tA: {}'.format(cross_entropy, accuracy))
+            print('#{}\tloss: {}\taccuracy: {}'.format(example_idx, cross_entropy, accuracy))
 
             # Backprop
             output_gradient = propagation.output_gradient(y, y_hat)
