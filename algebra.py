@@ -119,6 +119,11 @@ class Matrix:
             matrix_t.append(row_t)
         return Matrix(matrix_t)
 
+    def __sub__(self, other):
+        if self.rows != other.rows or self.cols != other.cols:
+            raise Exception('Matrix dimension don\'t match')
+        return Matrix([[self.matrix[i][j] - other.matrix[i][j] for j in range(self.cols)] for i in range(self.rows)])
+
     def __mul__(self, other):
         """
         Multiply by vector OR matrix OR scalar
@@ -164,6 +169,7 @@ if __name__ == '__main__':
     v = Vector([1, 2, 3])
     v.print()
     (v / 10).print()
+    v.mul_scalar(10).print()
     print(len(v))
     (v + v).print()
     (v - v).print()
@@ -178,7 +184,8 @@ if __name__ == '__main__':
     m.transpose().print()
 
     m = Matrix([[1, 1], [1, 2]])
+    (m * 10).print()
+    ((m * 10) - m).print()
     v = Vector([3, 4])
     (m * v).print()
-
     (m * m).print()
