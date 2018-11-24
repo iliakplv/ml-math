@@ -48,13 +48,16 @@ class Vector:
 
     def __mul__(self, other):
         """
-        Dot product a.k.a. inner product
-        :param other: Vector
-        :return: scalar value
+        Dot product OR multiplication by scalar
+        :param other: Vector OR float
+        :return: scalar value OR Vector (respectively)
         """
-        if len(self) != len(other):
-            raise Exception('Different size vectors')
-        return list_sum(list_mul(self.vector, other.vector))
+        if isinstance(other, Vector):
+            if len(self) != len(other):
+                raise Exception('Different size vectors')
+            return list_sum(list_mul(self.vector, other.vector))
+        else:
+            return self.mul_scalar(other)
 
     def mul_element_wise(self, other):
         """
