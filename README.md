@@ -8,10 +8,11 @@ This is an implementation of fundamental mathematics of ML (specifically, Neural
 
 `$ python main.py`
 
-## To-do
+## To-do (maybe)
 
+- Train/evaluation data split
+- Stochastic gradient descent
 - More activation functions
-- Batch gradient descent
 - Softmax
 - Regularisation
 - Refactor all the things
