@@ -2,6 +2,12 @@ import math
 import algebra
 
 
+def mse(y_hat, y):
+    if len(y_hat) != len(y):
+        raise Exception('Different size lists')
+    return algebra.list_sum([(y_hat[i] - y[i]) * (y_hat[i] - y[i]) for i in range(len(y))]) / len(y)
+
+
 def cross_entropy(y_hat, y):
     if len(y_hat) != len(y):
         raise Exception('Different size lists')
@@ -12,7 +18,7 @@ def cross_entropy(y_hat, y):
     return -sum
 
 
-def cross_entropy_loss(y_hat_list, y_list):
+def loss(y_hat_list, y_list, error_function):
     if len(y_hat_list) != len(y_list):
         raise Exception('Different size lists')
 
@@ -22,7 +28,7 @@ def cross_entropy_loss(y_hat_list, y_list):
     for i in range(total):
         y_hat = y_hat_list[i]
         y = y_list[i]
-        sum += cross_entropy(y_hat, y)
+        sum += error_function(y_hat, y)
 
     return sum / total
 
