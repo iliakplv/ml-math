@@ -47,14 +47,14 @@ def train(X, Y, act_fun, act_fun_back, architecture, learning_rate, epochs):
             y_hat, layer_outputs = propagation.net_forward_prop(layers, x, params, act_fun)
 
             # Metrics
-            cross_entropy = metrics.cross_entropy(y_hat, y)
-            y_hat_tests = []
-            for test_idx in range(len(X)):
-                x_test = algebra.Vector(X[test_idx])
-                y_hat_test, _ = propagation.net_forward_prop(layers, x_test, params, act_fun)
-                y_hat_tests.append(y_hat_test.vector)
-            accuracy = metrics.accuracy(y_hat_tests, Y)
-            print('#{}\tloss: {}\taccuracy: {}'.format(example_idx, cross_entropy, accuracy))
+            m_y_hat_list = []
+            for m_idx in range(len(X)):
+                m_x = algebra.Vector(X[m_idx])
+                m_y_hat, _ = propagation.net_forward_prop(layers, m_x, params, act_fun)
+                m_y_hat_list.append(m_y_hat.vector)
+            loss = metrics.cross_entropy_loss(m_y_hat_list, Y)
+            accuracy = metrics.accuracy(m_y_hat_list, Y)
+            print('#{}\tloss: {}\taccuracy: {}'.format(example_idx, loss, accuracy))
 
             # Backprop
             output_gradient = propagation.output_gradient(y, y_hat)
