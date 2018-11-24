@@ -7,31 +7,62 @@ def layer_forward_prop(layer_input, weight_matrix, bias_vector, act_fun):
     return z, act_fun(z)
 
 
-def net_forward_prop(layers, input, parameters, act_fun):
+def net_forward_prop(layers, net_input, params, act_fun):
     layer_outputs = {}
-    A_curr = input
+    A_curr = net_input
 
-    for l in range(layers):
+    for l in range(1, layers):
         A_prev = A_curr
 
-        W_curr = parameters['W{}'.format(l)]
-        b_curr = parameters['b{}'.format(l)]
+        W_curr = params['W{}'.format(l)]
+        b_curr = params['b{}'.format(l)]
         Z_curr, A_curr = layer_forward_prop(A_prev, W_curr, b_curr, act_fun)
 
+        layer_outputs['A{}'.format(l - 1)] = A_prev
         layer_outputs['Z{}'.format(l)] = Z_curr
-        layer_outputs['A{}'.format(l)] = A_curr
 
-        return layer_outputs
+        return A_curr, layer_outputs
 
 
-def layer_back_prop(dA_curr, W_curr, Z_curr, A_prev, act_back, batch_size):
+def layer_back_prop(dA_curr, W_curr, Z_curr, A_prev, act_back):
+    m = len(A_prev)
+
     dZ_curr = act_back(dA_curr, Z_curr)
 
-    dW_curr = dZ_curr.mul_outer(A_prev) / batch_size
-    db_curr = dZ_curr / batch_size
+    dW_curr = dZ_curr.mul_outer(A_prev) / m
+    db_curr = dZ_curr / m
     dA_prev = W_curr.transpose() * dZ_curr
 
     return dW_curr, db_curr, dA_prev
+
+
+def net_back_prop(layers, layer_outputs, output_gradient, params, act_back):
+    param_gradients = {}
+    dA_prev = output_gradient
+
+    for l in reversed(range(1, layers)):
+        dA_curr = dA_prev
+
+        W_curr = params['W{}'.format(l)]
+        Z_curr = layer_outputs['Z{}'.format(l)]
+        A_prev = layer_outputs['A{}'.format(l - 1)]
+
+        dW_curr, db_curr, dA_prev = layer_back_prop(dA_curr, W_curr, Z_curr, A_prev, act_back)
+
+        param_gradients['dW{}'.format(l)] = dW_curr
+        param_gradients['db{}'.format(l)] = db_curr
+
+    return param_gradients
+
+
+def output_gradient(Y, Y_hat):
+    gradient = []
+    for i in range(len(Y)):
+        y = Y[i]
+        y_hat = Y_hat[i]
+        g = -((y / y_hat) - ((1 - y) / (1 - y_hat)))
+        gradient.append(g)
+    return algebra.Vector(gradient)
 
 
 if __name__ == '__main__':
@@ -53,7 +84,7 @@ if __name__ == '__main__':
     print('\nBack prop (layer)')
     layer_gradient = algebra.Vector([0.1, 0.2, 0.1])
 
-    dW_curr, db_curr, dA_prev = layer_back_prop(layer_gradient, W_curr, Z_curr, A_prev, act_back, 1)
+    dW_curr, db_curr, dA_prev = layer_back_prop(layer_gradient, W_curr, Z_curr, A_prev, act_back)
 
     print('dW_curr:')
     dW_curr.print()
