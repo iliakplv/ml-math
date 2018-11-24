@@ -32,7 +32,7 @@ def update_params(layers, params, param_gradients, learning_rate):
         params['b{}'.format(l)] -= param_gradients['db{}'.format(l)] * learning_rate
 
 
-def train(X, Y, act_fun, act_fun_back, architecture, learning_rate, epochs, metrics_period):
+def train(X, Y, act_fun, act_fun_back, architecture, loss_metric, learning_rate, epochs, metrics_period):
     layers = len(architecture)
     params = init_params(architecture)
 
@@ -60,7 +60,7 @@ def train(X, Y, act_fun, act_fun_back, architecture, learning_rate, epochs, metr
                     m_x = algebra.Vector(X[m_idx])
                     m_y_hat, _ = propagation.net_forward_prop(layers, m_x, params, act_fun)
                     m_y_hat_list.append(m_y_hat.vector)
-                loss = metrics.loss(m_y_hat_list, Y, metrics.mse)
+                loss = metrics.loss_function(m_y_hat_list, Y, loss_metric)
                 accuracy = metrics.accuracy(m_y_hat_list, Y)
-                print('Epoch: {}\tExamples: {}\t\tLoss: {}\t\tAccuracy: {}'.format(
-                    epoch, examples_processed, loss, accuracy))
+                print('Epoch: {}\tExamples: {}k\t\tLoss: {}\t\tAccuracy: {}'.format(
+                    epoch, examples_processed / 1000, loss, accuracy))

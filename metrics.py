@@ -1,4 +1,5 @@
 import math
+
 import algebra
 
 
@@ -18,7 +19,7 @@ def cross_entropy(y_hat, y):
     return -sum
 
 
-def loss(y_hat_list, y_list, error_function):
+def loss_function(y_hat_list, y_list, loss_metric):
     if len(y_hat_list) != len(y_list):
         raise Exception('Different size lists')
 
@@ -28,7 +29,7 @@ def loss(y_hat_list, y_list, error_function):
     for i in range(total):
         y_hat = y_hat_list[i]
         y = y_list[i]
-        sum += error_function(y_hat, y)
+        sum += loss_metric(y_hat, y)
 
     return sum / total
 
