@@ -76,6 +76,9 @@ class Vector:
         m2 = Matrix([other.vector])
         return m1 * m2
 
+    def mul_scalar(self, value):
+        return Vector([item * value for item in self.vector])
+
     def __truediv__(self, value):
         """
         Divide by scalar value
@@ -118,16 +121,16 @@ class Matrix:
 
     def __mul__(self, other):
         """
-        Multiply by vector or matrix
-        :param other: Vector or Matrix
-        :return: Vector or Matrix
+        Multiply by vector OR matrix OR scalar
+        :param other: Vector OR Matrix OR float
+        :return: Vector OR Matrix OR Matrix (respectively)
         """
         if isinstance(other, Vector):
             return self.mul_vector(other)
         elif isinstance(other, Matrix):
             return self.mul_matrix(other)
         else:
-            raise NotImplementedError
+            return self.mul_scalar(other)
 
     def mul_vector(self, vector):
         if self.cols != len(vector):
@@ -138,6 +141,9 @@ class Matrix:
         if self.cols != other.rows:
             raise Exception('Incompatible matrix dimensions')
         return Matrix(mat_mul(self.matrix, other.matrix))
+
+    def mul_scalar(self, value):
+        return Matrix([[item * value for item in row] for row in self.matrix])
 
     def __truediv__(self, value):
         """
