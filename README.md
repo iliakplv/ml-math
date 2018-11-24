@@ -11,6 +11,7 @@ This is an implementation of fundamental mathematics of ML (specifically, Neural
 ## To-do
 
 - More activation functions
+- Batch gradient descent
 - Softmax
 - Regularisation
 - Refactor all the things
