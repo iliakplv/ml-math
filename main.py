@@ -31,12 +31,14 @@ if __name__ == '__main__':
                 training_epochs,
                 metrics_period)
 
-    test_features = []
-    test_labels = []
-    for i in range(test_examples):
-        r = random.randint(0, len(features))
-        test_features.append(features[r])
-        test_labels.append(labels[r])
-    train.predict(test_features, test_labels)
+    # Uncomment to do the random test on the trained NN
+    # test_features = []
+    # test_labels = []
+    # for i in range(test_examples):
+    #     r = random.randint(0, len(features))
+    #     test_features.append(features[r])
+    #     test_labels.append(labels[r])
+    # train.predict(test_features, test_labels)
 
+    # Uncomment to print the NN's parameters
     # train.print_params()
