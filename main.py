@@ -13,10 +13,10 @@ activation_function_back = activation.tanh_back
 
 loss_metric = metrics.mse
 learning_rate = 0.000001
-training_epochs = 10000
+training_epochs = 5000
 
 metrics_period = 10000  # calculate metrics every `metrics_period` iterations
-test_examples = 5  # number of test examples for the trained network
+test_examples = 10  # number of test examples for the trained network
 
 if __name__ == '__main__':
     features, labels = data.get_training_data()

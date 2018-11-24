@@ -78,13 +78,19 @@ def predict(X, Y):
         params = memory['params']
         act_fun = memory['act_fun']
 
+        y_hats = []
+
         for example_idx in range(len(X)):
             x = algebra.Vector(X[example_idx])
             y = algebra.Vector(Y[example_idx])
             y_hat, _ = propagation.net_forward_prop(layers, x, params, act_fun)
+            y_hats.append(y_hat.vector)
             print('\nExample #{}'.format(example_idx))
             y.print()
             y_hat.print()
+
+        accuracy = metrics.accuracy(y_hats, Y)
+        print('\nAccuracy: {}'.format(accuracy))
 
 
 def print_params():
