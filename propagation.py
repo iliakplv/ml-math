@@ -58,8 +58,8 @@ def net_back_prop(layers, layer_outputs, output_gradient, params, act_back):
 def output_gradient(y_vector, y_hat_vector):
     gradient = []
     for i in range(len(y_vector)):
-        y = y_vector[i]
-        y_hat = y_hat_vector[i]
+        y = y_vector.vector[i]
+        y_hat = y_hat_vector.vector[i]
         g = -((y / y_hat) - ((1 - y) / (1 - y_hat)))
         gradient.append(g)
     return algebra.Vector(gradient)
