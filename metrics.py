@@ -12,7 +12,16 @@ def cross_entropy(predictions, targets):
     return -sum
 
 
+def non_zero_index(vector):
+    vector = vector.vector
+    for i, value in enumerate(vector):
+        if value != 0:
+            return i
+    raise Exception('Value not found')
+
+
 def max_value_index(vector):
+    vector = vector.vector
     max_index = 0
     max_value = vector.vector[0]
     for i in range(len(vector)):
@@ -21,13 +30,13 @@ def max_value_index(vector):
     return max_index
 
 
-def accuracy(probability_vectors, labels):
-    if len(probability_vectors) != len(labels):
-        raise Exception('Different size lists')
-    total = len(labels)
+def accuracy(y_hat_vectors, y_vectors):
+    if len(y_hat_vectors) != len(y_vectors):
+        raise Exception('Different size vectors')
+    total = len(y_vectors)
     total_correct = 0
     for i in range(total):
-        if max_value_index(probability_vectors[i]) == labels[i]:
+        if max_value_index(y_hat_vectors[i]) == non_zero_index(y_vectors[i]):
             total_correct += 1
     return total_correct / total
 
