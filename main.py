@@ -1,4 +1,4 @@
-import random
+import time
 
 import activation
 import data
@@ -21,6 +21,8 @@ test_examples = 10  # number of test examples for the trained network
 if __name__ == '__main__':
     features, labels = data.get_training_data()
 
+    start = time.time()
+
     train.train(features,
                 labels,
                 activation_function,
@@ -30,6 +32,10 @@ if __name__ == '__main__':
                 learning_rate,
                 training_epochs,
                 metrics_period)
+
+    finish = time.time()
+
+    print('\nTraining finished in {0:.1f} seconds\n'.format(finish - start))
 
     # Uncomment to do the random test on the trained NN
     # test_features = []
